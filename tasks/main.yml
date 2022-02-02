@@ -1,0 +1,38 @@
+---
+# tasks file for ansible-role-nfsclient
+
+- name: Include overrides specific to Fedora.
+  include_vars: Fedora.yml
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution == "Fedora"
+
+# Setup/install tasks.
+- include_tasks: setup-RedHat.yml
+  when: ansible_os_family == 'RedHat'
+
+- include_tasks: setup-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+
+- name: Create Log directories
+  file:
+    path: "{{item.path}}"
+    state: directory
+    owner: "{{username}}"
+    group: "{{group}}"
+    mode: 0755
+    recurse: yes
+  register: file_output
+  with_items: "{{nfsmounts}}" 
+
+- name: mount the nfsshare in client side
+  mount:
+      fstype: nfs
+      opts: defaults,_netdev,x-systemd.automount,nofail,noatime,nolock,intr,tcp
+      dump: '0'
+      passno: '0'
+      state: mounted
+      src: "{{item.src}}"
+      path: "{{item.path}}"
+  with_items: "{{nfsmounts}}"  

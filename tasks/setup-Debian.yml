@@ -1,0 +1,8 @@
+---
+ - name: Installing Nfs Packages
+   apt:
+     name: nfs-common
+     state: present
+
+ - name: Disable IpTables
+   shell: iptables -F

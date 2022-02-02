@@ -1,0 +1,15 @@
+---
+# vars file for ansible-role-nfsclient
+
+nfsmounts:
+      - {  path: "/opt/vcloudx/etc/sslcerts", src: "{{nfsserver}}:/opt/vcloudx/etc/sslcerts" }
+      - {  path: "/opt/vcloudx/etc/configs", src: "{{nfsserver}}:/opt/vcloudx/etc/configs" }
+      - {  path: "/opt/vcloudx/etc/configs", src: "{{nfsserver}}:/opt/vcloudx/etc/configs" }
+      - {  path: "/opt/vcloudx/dataStore/SG", src: "{{nfsserver}}:/opt/vcloudx/dataStore/SG" }
+      - {  path: "/opt/vcloudx/dataStore/IN", src: "{{nfsserver}}:/opt/vcloudx/dataStore/IN" }
+      - {  path: "/opt/vcloudx/dataStore/US", src: "{{nfsserver}}:/opt/vcloudx/dataStore/US" }
+
+
+username: svcvplatx
+group: svcvplatx
+nfsserver: 10.100.1.4
